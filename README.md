@@ -1,11 +1,11 @@
 # GlueEtlExample
 This is an example of [AWS Glue] ETL. It will also using [AWS CodePipeline] and [AWS CloudFormation] to manage infrastructure and code deployment.
 
-# Prerequisites
+## Prerequisites
 1. [Install AWS CLI]
 2. [Setup AWS CLI]
 
-# Project plan:
+## Project plan:
 1. Add Gradle support.
     ~~1. Auto create S3 bucket for infrastructure.~~
     ~~2. Auto build and package project.~~
@@ -18,7 +18,7 @@ This is an example of [AWS Glue] ETL. It will also using [AWS CodePipeline] and 
 3. Add infrastructure to manage code pipeline stack. TODO: add detail steps
 4. Add ETL sample code. TODO: add detail steps
 
-#TODO:
+## TODO:
 1. Automate 2.1 instead of running
 ```aws cloudformation deploy --template-file ./infrastructures/glue-stack.yml --s3-bucket glue-etl-example-infrastructure --stack-name GlueEtlExample --capabilities CAPABILITY_IAM```
 
