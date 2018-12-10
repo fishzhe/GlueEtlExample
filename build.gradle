@@ -42,3 +42,10 @@ task createBucket(type: CreateBucketTask) {
     bucketName "glue-etl-example-infrastructure"
     ifNotExists true
 }
+
+task sourcesJar(type: Jar, dependsOn: classes) {
+    classifier = "sources"
+    from sourceSets.main.allSource
+}
+
+defaultTasks "clean", "build", "sourcesJar"

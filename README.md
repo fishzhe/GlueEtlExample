@@ -3,8 +3,8 @@ This is an example of [AWS Glue] ETL. It will also using [AWS CodePipeline] and 
 
 # Project plan:
 1. Add Gradle support.
-    1. Auto create S3 bucket for infrastructure.
-    2. Auto build and package project.
+    ~~1. Auto create S3 bucket for infrastructure.~~
+    ~~2. Auto build and package project.~~
     3. Auto upload jar to S3 bucket. (After adding ETL sample code)
 2. Add infrastructure to manage code pipeline stack. TODO: add detail steps
 3. Add infrastructure to manage glue stack. TODO: add detail steps
