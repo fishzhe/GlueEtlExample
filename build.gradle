@@ -38,8 +38,10 @@ aws {
     region = "us-west-2"
 }
 
+def infraBucketName = "glue-etl-example-infrastructure"
+
 task createBucket(type: CreateBucketTask) {
-    bucketName "glue-etl-example-infrastructure"
+    bucketName infraBucketName
     ifNotExists true
 }
 

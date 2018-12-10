@@ -1,0 +1,12 @@
+---
+AWSTemplateFormatVersion: '2010-09-09'
+Description: Stack for glue job etl example
+Parameters:
+  InfraBucket:
+    Description: Infrastructure bucket name
+Resources:
+  GlueEtlExample:
+    Type: AWS::CloudFormation::Stack
+    Properties:
+      TemplateUrl: {"Fn::Sub": "https://s3.amazonaws.com/glue-etl-example-infrastructure/glue-stack.yml"}
+      TimeoutInMinutes: '5'
