@@ -1,12 +1,21 @@
 ---
 AWSTemplateFormatVersion: '2010-09-09'
 Description: Stack for glue job etl example
-Parameters:
-  InfraBucket:
-    Description: Infrastructure bucket name
+#Parameters:
+#  InfraBucket:
+#    Description: Infrastructure bucket name
+#    Type: String
 Resources:
-  GlueEtlExample:
+  GlueStack:
     Type: AWS::CloudFormation::Stack
     Properties:
-      TemplateUrl: {"Fn::Sub": "https://s3.amazonaws.com/glue-etl-example-infrastructure/glue-stack.yml"}
+      Parameters:
+        GlueJobRoleArn:
+          !GetAtt IamStack.Outputs.GlueJobRoleArn
+      TemplateURL: 'https://s3.amazonaws.com/glue-etl-example-infrastructure/7ebbb7ce196c0e89cee0f6ec5c14cc3f.template'
+      TimeoutInMinutes: '5'
+  IamStack:
+    Type: AWS::CloudFormation::Stack
+    Properties:
+      TemplateURL: 'https://s3.amazonaws.com/glue-etl-example-infrastructure/59262e1395965bed81b34ad9fc1fa891.template'
       TimeoutInMinutes: '5'

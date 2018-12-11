@@ -1,0 +1,49 @@
+---
+AWSTemplateFormatVersion: '2010-09-09'
+Description: Iam, policies
+Resources:
+  GlueJobRole:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          -
+            Effect: "Allow"
+            Principal:
+              Service:
+                - "glue.amazonaws.com"
+            Action:
+              - "sts:AssumeRole"
+      Path: "/"
+      Policies:
+        -
+          PolicyName: "glue-full-access"
+          PolicyDocument:
+            Version: "2012-10-17"
+            Statement:
+              -
+                Effect: "Allow"
+                Action:
+                  - "glue:*"
+                Resource: "*"
+        -
+          PolicyName: "s3-access"
+          PolicyDocument:
+            Version: "2012-10-17"
+            Statement:
+              -
+                Effect: "Allow"
+                Action:
+                  - "s3:GetObject"
+                  - "s3:PutObject"
+                Resource:
+                  - "arn:aws:s3:::aws-glue-*/*"
+                  - "arn:aws:s3:::*/*aws-glue-*/*"
+                  - "arn:aws:s3:::aws-glue-*"
+Outputs:
+  GlueJobRoleArn:
+    Value:
+      !GetAtt GlueJobRole.Arn
+    Export:
+      Name: GlueJobRoleArn

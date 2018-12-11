@@ -12,15 +12,19 @@ This is an example of [AWS Glue] ETL. It will also using [AWS CodePipeline] and 
     3. Auto upload jar to S3 bucket. (After adding ETL sample code)
 2. Add infrastructure to manage glue stack.
     ~~1. Add dummy glue job stack and roles~~
-    2. Create IAM stack
+    ~~2. Create IAM stack~~
     3. Create S3 stack
-    4. Update glue stack
+    ~~4. Update glue stack~~
+    5. Automate cloudformation deployment
 3. Add infrastructure to manage code pipeline stack. TODO: add detail steps
 4. Add ETL sample code. TODO: add detail steps
 
-## TODO:
-1. Automate 2.1 instead of running
-```aws cloudformation deploy --template-file ./infrastructures/glue-stack.yml --s3-bucket glue-etl-example-infrastructure --stack-name GlueEtlExample --capabilities CAPABILITY_IAM```
+## Notes:
+1. Manual deploy cloudformation stack:
+    1. Use ```aws cloudformation package``` to upload templates to s3
+    2. Use ```aws cloudformation deploy``` to deploy updates of stacks
+
+```aws cloudformation deploy --template-file ./infrastructures/master.yml --s3-bucket glue-etl-example-infrastructure --stack-name GlueEtlExample --capabilities CAPABILITY_IAM```
 
 
 [AWS Glue]: https://aws.amazon.com/glue/?sc_channel=PS&sc_campaign=acquisition_US&sc_publisher=google&sc_medium=ACQ-P%7CPS-GO%7CBrand%7CDesktop%7CSU%7CAnalytics%7CGlue%7CUS%7CEN%7CText&sc_content=glue_e&sc_detail=aws%20glue&sc_category=Analytics&sc_segment=293614961004&sc_matchtype=e&sc_country=US&s_kwcid=AL!4422!3!293614961004!e!!g!!aws%20glue&ef_id=CjwKCAiAl7PgBRBWEiwAzFhmmqxOsGTevmEzpO9ueWqJvmxvAgBFGw2xecp3aQX7QbPxw0cWigdJshoCl8YQAvD_BwE:G:s
