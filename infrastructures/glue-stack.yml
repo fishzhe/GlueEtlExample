@@ -17,6 +17,12 @@ Resources:
         ScriptLocation: !Sub "s3://${GlueMainBucketName}/com/glue/jobs/JobExample.scala"
       DefaultArguments:
         "--job-bookmark-option": "job-bookmark-enable"
+        "--BusinessSourcePath": !Sub "s3://${GlueMainBucketName}/resources/"
+        "--extra-jars": !Sub "s3://${GlueMainBucketName}/lib/GlueEtlExample.jar"
+        "--job-language": "scala"
+        "--class": "com.glue.jobs.JobExample"
+        "--enable-metrics": "true"
+        "--job-bookmark-option": "job-bookmark-disable"
       ExecutionProperty:
         MaxConcurrentRuns: 2
       MaxRetries: 0

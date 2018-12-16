@@ -3,6 +3,32 @@
  */
 package com.glue.jobs
 
-class JobExample {
-  def someLibraryMethod(): Boolean = true
+import com.amazonaws.services.glue.GlueContext
+import com.amazonaws.services.glue.util.GlueArgParser
+import com.amazonaws.services.glue.util.Job
+import com.glue.common.JobEnum
+import com.glue.impl.GlueExtractor
+import org.apache.spark.SparkContext
+
+import scala.collection.JavaConverters._
+
+object JobExample{
+  val S3ConnectionType:String = "s3"
+  val CsvFormat:String = "csv"
+
+  def main(sysArgs: Array[String]) {
+    val spark: SparkContext = new SparkContext()
+    val glueContext: GlueContext = new GlueContext(spark)
+    val args = GlueArgParser.getResolvedOptions(sysArgs, Seq("JOB_NAME").toArray)
+    Job.init(args("JOB_NAME"), glueContext, args.asJava)
+
+    val businessSourcePath = args(JobEnum.BusinessSourcePath.toString)
+    val extractor:GlueExtractor = new GlueExtractor(glueContext)
+    val businessRawData = extractor.extract(businessSourcePath, CsvFormat, S3ConnectionType)
+
+    businessRawData.show(false)
+
+    Job.commit()
+  }
 }
+

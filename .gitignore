@@ -6,3 +6,6 @@ build
 
 # Ignore cloudformation output
 output.yml
+
+# Ignore local lib
+lib
