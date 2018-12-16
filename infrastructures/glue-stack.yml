@@ -5,17 +5,20 @@ Parameters:
   GlueJobRoleArn:
     Description: Glue job role
     Type: String
+  GlueMainBucketName:
+    Description: Glue main bucket name
+    Type: String
 Resources:
   GlueJobExample:
     Type: AWS::Glue::Job
     Properties:
       Command:
         Name: glueetl
-        ScriptLocation: "s3://aws-glue-scripts//prod-job1"
+        ScriptLocation: !Sub "s3://${GlueMainBucketName}/com/glue/jobs/JobExample.scala"
       DefaultArguments:
         "--job-bookmark-option": "job-bookmark-enable"
       ExecutionProperty:
         MaxConcurrentRuns: 2
       MaxRetries: 0
-      Name: cf-job1
+      Name: job-example
       Role: !Ref GlueJobRoleArn

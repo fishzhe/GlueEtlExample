@@ -7,6 +7,7 @@
  */
 
 import jp.classmethod.aws.gradle.s3.CreateBucketTask;
+import jp.classmethod.aws.gradle.s3.SyncTask;
 
 plugins {
     // Apply the scala plugin to add support for Scala
@@ -45,9 +46,17 @@ task createBucket(type: CreateBucketTask) {
     ifNotExists true
 }
 
+def glueJobsMainBucketName = "glue-main-bucket"
+task syncJobs(type: SyncTask, dependsOn: createBucket) {
+    source file("src/main/scala/com/glue/jobs/") // must be directory
+    bucketName glueJobsMainBucketName
+    prefix "com/glue/jobs/"
+
+}
+
 task sourcesJar(type: Jar, dependsOn: classes) {
     classifier = "sources"
     from sourceSets.main.allSource
 }
 
-defaultTasks "clean", "build", "sourcesJar"
+defaultTasks "clean", "build", "sourcesJar", "syncJobs"

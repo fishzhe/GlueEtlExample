@@ -7,15 +7,23 @@ Description: Stack for glue job etl example
 #    Type: String
 Resources:
   GlueStack:
+    DependsOn: S3Stack
     Type: AWS::CloudFormation::Stack
     Properties:
       Parameters:
         GlueJobRoleArn:
           !GetAtt IamStack.Outputs.GlueJobRoleArn
-      TemplateURL: 'https://s3.amazonaws.com/glue-etl-example-infrastructure/7ebbb7ce196c0e89cee0f6ec5c14cc3f.template'
+        GlueMainBucketName:
+          !GetAtt S3Stack.Outputs.GlueMainBucketName
+      TemplateURL: 'glue-stack.yml'
       TimeoutInMinutes: '5'
   IamStack:
     Type: AWS::CloudFormation::Stack
     Properties:
-      TemplateURL: 'https://s3.amazonaws.com/glue-etl-example-infrastructure/59262e1395965bed81b34ad9fc1fa891.template'
+      TemplateURL: 'iam-stack.yml'
+      TimeoutInMinutes: '5'
+  S3Stack:
+    Type: AWS::CloudFormation::Stack
+    Properties:
+      TemplateURL: 's3-stack.yml'
       TimeoutInMinutes: '5'
