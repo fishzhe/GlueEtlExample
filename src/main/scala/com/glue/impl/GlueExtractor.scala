@@ -13,6 +13,12 @@ class GlueExtractor(glueContext: GlueContext) extends Extractor{
 
   override def extract(path:String, format:String, connectionType: String): DataFrame = {
     val options = JsonOptions(Map("path" -> path));
-    glueContext.getSourceWithFormat(connectionType, options, format).getDynamicFrame().toDF();
+
+    glueContext.getSourceWithFormat(
+      connectionType = connectionType,
+      options = options,
+      format = format)
+      .getDynamicFrame()
+      .toDF();
   }
 }

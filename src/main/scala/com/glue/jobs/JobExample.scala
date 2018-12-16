@@ -19,7 +19,7 @@ object JobExample{
   def main(sysArgs: Array[String]) {
     val spark: SparkContext = new SparkContext()
     val glueContext: GlueContext = new GlueContext(spark)
-    val args = GlueArgParser.getResolvedOptions(sysArgs, Seq("JOB_NAME").toArray)
+    val args = GlueArgParser.getResolvedOptions(sysArgs, Seq("JOB_NAME", JobEnum.BusinessSourcePath.toString).toArray)
     Job.init(args("JOB_NAME"), glueContext, args.asJava)
 
     val businessSourcePath = args(JobEnum.BusinessSourcePath.toString)

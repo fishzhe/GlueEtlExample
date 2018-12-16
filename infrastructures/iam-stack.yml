@@ -41,6 +41,19 @@ Resources:
                   - "arn:aws:s3:::aws-glue-*/*"
                   - "arn:aws:s3:::*/*aws-glue-*/*"
                   - "arn:aws:s3:::aws-glue-*"
+                  - "arn:aws:s3:::glue-*"
+        -
+          PolicyName: "cloudwatch-access"
+          PolicyDocument:
+            Version: "2012-10-17"
+            Statement:
+              -
+                Effect: "Allow"
+                Action:
+                  - "cloudwatch:*"
+                  - "logs:*"
+                Resource: "*"
+
 Outputs:
   GlueJobRoleArn:
     Value:
