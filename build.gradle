@@ -54,6 +54,13 @@ task syncJobs(type: SyncTask, dependsOn: createBucket) {
 
 }
 
+task initDataSource(type: SyncTask, dependsOn: createBucket) {
+    source file("src/main/resources/") // must be directory
+    bucketName glueJobsMainBucketName
+    prefix "resources/"
+
+}
+
 task sourcesJar(type: Jar, dependsOn: classes) {
     classifier = "sources"
     from sourceSets.main.allSource
