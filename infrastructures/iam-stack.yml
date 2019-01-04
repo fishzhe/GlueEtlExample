@@ -35,8 +35,7 @@ Resources:
               -
                 Effect: "Allow"
                 Action:
-                  - "s3:GetObject"
-                  - "s3:PutObject"
+                  - "s3:*"
                 Resource:
                   - "arn:aws:s3:::aws-glue-*/*"
                   - "arn:aws:s3:::*/*aws-glue-*/*"

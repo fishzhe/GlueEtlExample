@@ -80,4 +80,4 @@ task uploadJar(type: SyncTask, dependsOn: sourcesJar) {
 }
 
 
-defaultTasks "clean", "build", "sourcesJar", "syncJobs"
+defaultTasks "clean", "build", "sourcesJar", "syncJobs", "uploadJar"

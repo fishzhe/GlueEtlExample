@@ -16,8 +16,9 @@ Resources:
         Name: glueetl
         ScriptLocation: !Sub "s3://${GlueMainBucketName}/com/glue/jobs/JobExample.scala"
       DefaultArguments:
-        "--job-bookmark-option": "job-bookmark-enable"
-        "--BusinessSourcePath": !Sub "s3://${GlueMainBucketName}/resources/"
+        "--resourcesBucket": !Sub "s3://${GlueMainBucketName}"
+        "--resourcesKey": "resources/Meteorite_Landings.csv"
+        "--outputKeyPrefix": "output/"
         "--extra-jars": !Sub "s3://${GlueMainBucketName}/lib/GlueEtlExample.jar"
         "--job-language": "scala"
         "--class": "com.glue.jobs.JobExample"

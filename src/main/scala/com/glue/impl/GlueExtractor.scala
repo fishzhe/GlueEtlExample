@@ -12,13 +12,11 @@ import org.apache.spark.sql.DataFrame
 class GlueExtractor(glueContext: GlueContext) extends Extractor{
 
   override def extract(path:String, format:String, connectionType: String): DataFrame = {
-    val options = JsonOptions(Map("path" -> path));
+    val options = JsonOptions(Map("paths" -> Seq(path)));
 
-    glueContext.getSourceWithFormat(
-      connectionType = connectionType,
-      options = options,
-      format = format)
+    glueContext.getSource(connectionType = connectionType, connectionOptions = options)
+      .withFormat(format)
       .getDynamicFrame()
-      .toDF();
+      .toDF()
   }
 }

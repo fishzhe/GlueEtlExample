@@ -8,6 +8,7 @@ import com.amazonaws.services.glue.util.GlueArgParser
 import com.amazonaws.services.glue.util.Job
 import com.glue.common.JobEnum
 import com.glue.impl.GlueExtractor
+import org.apache.spark.sql.functions.col
 import org.apache.spark.SparkContext
 
 import scala.collection.JavaConverters._
@@ -19,14 +20,22 @@ object JobExample{
   def main(sysArgs: Array[String]) {
     val spark: SparkContext = new SparkContext()
     val glueContext: GlueContext = new GlueContext(spark)
-    val args = GlueArgParser.getResolvedOptions(sysArgs, Seq("JOB_NAME", JobEnum.BusinessSourcePath.toString).toArray)
+    val args = GlueArgParser.getResolvedOptions(sysArgs, Seq("JOB_NAME", JobEnum.resourcesBucket.toString,
+      JobEnum.resourcesKey.toString, JobEnum.outputKeyPrefix.toString).toArray)
     Job.init(args("JOB_NAME"), glueContext, args.asJava)
 
-    val businessSourcePath = args(JobEnum.BusinessSourcePath.toString)
-    val extractor:GlueExtractor = new GlueExtractor(glueContext)
-    val businessRawData = extractor.extract(businessSourcePath, CsvFormat, S3ConnectionType)
+    val resourcesBucket = args(JobEnum.resourcesBucket.toString)
+    val resourcesPath = resourcesBucket + "/" + args(JobEnum.resourcesKey.toString)
+    val outputPath = resourcesBucket + "/" + args(JobEnum.outputKeyPrefix.toString)
 
-    businessRawData.show(false)
+    val extractor:GlueExtractor = new GlueExtractor(glueContext)
+    val rawData = extractor.extract(resourcesPath, CsvFormat, S3ConnectionType)
+
+    rawData.show(false)
+
+    rawData.filter(col("col4") > 100)
+
+    rawData.write.save(outputPath)
 
     Job.commit()
   }
